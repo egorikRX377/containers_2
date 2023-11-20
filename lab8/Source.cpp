@@ -107,7 +107,7 @@ class CompareStudents
 public:
 	bool operator()(const shared_ptr<Student>& student1, const shared_ptr<Student>& student2)
 	{
-		if (student1->getAverageRating() > student2->getAverageRating())
+		if (student1->getAverageRating() < student2->getAverageRating())
 		{
 			return true;
 		}
@@ -157,9 +157,11 @@ int main()
 
 
 	//===================================== Работа с очередью =====================================//
-	queue<shared_ptr< Student>, vector<shared_ptr<Student>> > studentQueue(vStudent);
+	queue<shared_ptr< Student>> studentQueue;
 
 	studentQueue.push(student4);
+	studentQueue.push(student2);
+	studentQueue.push(student3);
 
 	cout << "Первый студент в очереди: " << studentQueue.front() << endl;
 	cout << "Последний студент в очереди: " << studentQueue.back() << endl;
@@ -179,18 +181,16 @@ int main()
 
 	//===================================== Работа с приоритетной очередью =====================================//
 
-	priority_queue<shared_ptr<Student>, vector<shared_ptr<Student>>, CompareStudents> studentPrQueue;
+	priority_queue<shared_ptr<Student>, vector<shared_ptr<Student>>, CompareStudents> studentPrQueue(vStudent.begin(), vStudent.end());
 
-	studentPrQueue.push(student1);
-	studentPrQueue.push(student3);
-	studentPrQueue.push(student2);
-
-	cout << "Вывод на экран всех студентов в приоритетной очереди (компаратор по среднему баллу): " << endl;
+	cout << "Вывод на экран всех студентов в приоритетной очереди (компаратор по среднему баллу по убыванию): " << endl;
 	while (!studentPrQueue.empty())
 	{
 		cout << studentPrQueue.top() << endl;
 		studentPrQueue.pop();
 	}
 	//============================================================================================================//
+
+
 	return 0;
 }
